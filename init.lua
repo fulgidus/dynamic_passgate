@@ -13,7 +13,7 @@
 -- Admin panel accessible via /gate command or inventory button.
 -- Requires "server" priv OR "passgate_admin" priv.
 
-local MOD_VERSION = "1.0.5"
+local MOD_VERSION = "1.0.4"
 
 -- ============================================================================
 -- Persistent storage
@@ -26,13 +26,13 @@ local storage = core.get_mod_storage()
 -- ============================================================================
 
 local DEFAULTS = {
-    password_template  = "${name}-wants-in",
-    countdown_seconds  = "120",
-    max_strikes        = "3",
-    reminder_interval  = "10",
-    admin_email        = "",
-    server_title       = "",
-    verified_privs     = "interact,shout,fly,fast,noclip,give,creative,basic_privs,teleport,debug",
+    password_template     = "${name}-wants-in",
+    countdown_seconds     = "120",
+    max_strikes           = "3",
+    reminder_interval     = "10",
+    admin_email           = "",
+    server_title          = "",
+    verified_privs        = "interact,shout,fly,fast,noclip,give,creative,basic_privs,teleport,debug",
     show_inventory_button = "true",
 }
 
@@ -104,19 +104,19 @@ local function expand_template(template, player_name)
 
     -- Build substitution table (longest keys first to avoid partial matches)
     local vars = {
-        ["${name}"]  = player_name:lower(),
-        ["${NAME}"]  = player_name,
+        ["${name}"]   = player_name:lower(),
+        ["${NAME}"]   = player_name,
         ["${server}"] = get_server_title(),
-        ["${dd}"]    = string.format("%02d", t.day),
-        ["${d}"]     = tostring(t.day),
-        ["${mmmm}"]  = MONTH_FULL[m_idx],
-        ["${MMMM}"]  = MONTH_FULL[m_idx]:sub(1, 1):upper() .. MONTH_FULL[m_idx]:sub(2),
-        ["${mmm}"]   = MONTH_ABBR[m_idx],
-        ["${MMM}"]   = MONTH_ABBR[m_idx]:sub(1, 1):upper() .. MONTH_ABBR[m_idx]:sub(2),
-        ["${mm}"]    = string.format("%02d", t.month),
-        ["${m}"]     = tostring(t.month),
-        ["${yyyy}"]  = tostring(t.year),
-        ["${yy}"]    = string.format("%02d", t.year % 100),
+        ["${dd}"]     = string.format("%02d", t.day),
+        ["${d}"]      = tostring(t.day),
+        ["${mmmm}"]   = MONTH_FULL[m_idx],
+        ["${MMMM}"]   = MONTH_FULL[m_idx]:sub(1, 1):upper() .. MONTH_FULL[m_idx]:sub(2),
+        ["${mmm}"]    = MONTH_ABBR[m_idx],
+        ["${MMM}"]    = MONTH_ABBR[m_idx]:sub(1, 1):upper() .. MONTH_ABBR[m_idx]:sub(2),
+        ["${mm}"]     = string.format("%02d", t.month),
+        ["${m}"]      = tostring(t.month),
+        ["${yyyy}"]   = tostring(t.year),
+        ["${yy}"]     = string.format("%02d", t.year % 100),
     }
 
     -- Sort by key length descending to prevent partial matches
@@ -251,7 +251,7 @@ local function get_all_known_players()
             local lname = name:lower()
             if not seen[lname] then
                 seen[lname] = true
-                track_player(lname)  -- ensure they're tracked
+                track_player(lname) -- ensure they're tracked
                 local status = "unverified"
                 if is_blocked(lname) then
                     status = "blocked"
@@ -365,17 +365,17 @@ end
 -- ============================================================================
 
 local function get_admin_settings_formspec()
-    local pw_template     = core.formspec_escape(get_setting("password_template"))
-    local countdown       = get_setting("countdown_seconds")
-    local max_strikes     = get_setting("max_strikes")
-    local reminder        = get_setting("reminder_interval")
-    local email           = core.formspec_escape(get_setting("admin_email"))
-    local title           = core.formspec_escape(get_setting("server_title"))
-    local privs           = core.formspec_escape(get_setting("verified_privs"))
-    local inv_btn         = get_setting_bool("show_inventory_button")
+    local pw_template = core.formspec_escape(get_setting("password_template"))
+    local countdown   = get_setting("countdown_seconds")
+    local max_strikes = get_setting("max_strikes")
+    local reminder    = get_setting("reminder_interval")
+    local email       = core.formspec_escape(get_setting("admin_email"))
+    local title       = core.formspec_escape(get_setting("server_title"))
+    local privs       = core.formspec_escape(get_setting("verified_privs"))
+    local inv_btn     = get_setting_bool("show_inventory_button")
 
     -- Template variable reference
-    local help = "${name} ${NAME} ${server} ${d} ${dd} ${m} ${mm}\n"
+    local help        = "${name} ${NAME} ${server} ${d} ${dd} ${m} ${mm}\n"
         .. "${mmm} ${mmmm} ${MMM} ${MMMM} ${yy} ${yyyy}"
 
     return "formspec_version[6]"
@@ -407,7 +407,7 @@ local function get_admin_settings_formspec()
         .. "field[5,6.6;8.5,0.7;verified_privs;;" .. privs .. "]"
 
         .. "checkbox[0.5,8.0;show_inventory_button;Show inventory button;"
-            .. tostring(inv_btn) .. "]"
+        .. tostring(inv_btn) .. "]"
 
         .. "button[0.5,9.2;4,0.8;save_settings;Save]"
         .. "button[5,9.2;4,0.8;reset_defaults;Reset to Defaults]"
@@ -599,7 +599,7 @@ local function show_block_confirm(admin_name, target_name)
     local fs = "formspec_version[6]"
         .. "size[10,5]"
         .. "label[0.5,0.6;Block player: "
-            .. core.colorize("#FF5555", core.formspec_escape(target_name)) .. "]"
+        .. core.colorize("#FF5555", core.formspec_escape(target_name)) .. "]"
         .. "label[0.5,1.3;Reason (leave empty for default):]"
         .. "field[0.5,1.7;9,0.7;block_reason;;]"
         .. "label[0.5,2.8;" .. core.colorize("#888888",
@@ -615,7 +615,7 @@ end
 -- Pre-join: auto-create accounts with templated password
 -- ============================================================================
 
-core.register_on_prejoinplayer(function(name, ip)
+core.register_on_prejoinplayer(function(name, _ip)
     local lname = name:lower()
 
     if is_blocked(lname) then
@@ -656,7 +656,7 @@ end)
 -- On join: freeze unverified players and start countdown
 -- ============================================================================
 
-core.register_on_joinplayer(function(player, last_login)
+core.register_on_joinplayer(function(player, _last_login)
     local name = player:get_player_name()
     local lname = name:lower()
 
@@ -735,7 +735,7 @@ core.register_on_player_receive_fields(function(player, formname, fields)
         end
 
         if fields.reset_defaults then
-            for key, val in pairs(DEFAULTS) do
+            for key, _ in pairs(DEFAULTS) do
                 storage:set_string("setting:" .. key, "")
             end
             core.chat_send_player(name,
@@ -1088,7 +1088,7 @@ end)
 -- Clean up on player leave
 -- ============================================================================
 
-core.register_on_leaveplayer(function(player, timed_out)
+core.register_on_leaveplayer(function(player, _timed_out)
     local name = player:get_player_name()
     pending[name] = nil
     admin_state[name] = nil
@@ -1135,7 +1135,7 @@ core.register_chatcommand("gate", {
     params = "",
     description = "Open the Dynamic Passgate admin panel",
     privs = {},
-    func = function(name, param)
+    func = function(name, _param)
         if not has_admin_access(name) then
             return false, "You don't have permission to use this command."
         end
@@ -1284,20 +1284,20 @@ elseif sfinv then
     -- Fallback: plain sfinv page as an inventory tab
     sfinv.register_page("dynamic_passgate:admin", {
         title = "Gate",
-        is_in_nav = function(self, player, context)
+        is_in_nav = function(_self, player, _context)
             if not get_setting_bool("show_inventory_button") then
                 return false
             end
             return has_admin_access(player:get_player_name())
         end,
-        get = function(self, player, context)
+        get = function(_self, player, context)
             return sfinv.make_formspec(player, context,
                 "image_button[1.5,1;5,1;dynamic_passgate_icon.png;sfinv_gate_open;Open Gate Admin Panel]"
                 .. "label[1.5,2.5;" .. core.colorize("#888888",
                     "Or use /gate in chat") .. "]",
                 false)
         end,
-        on_player_receive_fields = function(self, player, context, fields)
+        on_player_receive_fields = function(_self, player, _context, fields)
             if fields.sfinv_gate_open then
                 show_admin_panel(player:get_player_name(), 1)
                 return true
@@ -1329,7 +1329,7 @@ else
     end
 
     -- Set the inventory formspec on join for admins
-    core.register_on_joinplayer(function(player, last_login)
+    core.register_on_joinplayer(function(player, _last_login)
         -- Delay slightly so other on_joinplayer handlers finish first
         core.after(0.5, function()
             local name = player:get_player_name()
@@ -1341,7 +1341,7 @@ else
     end)
 
     -- Handle the button click
-    core.register_on_player_receive_fields(function(player, formname, fields)
+    core.register_on_player_receive_fields(function(player, _formname, fields)
         if fields.vanilla_gate_open then
             local name = player:get_player_name()
             if has_admin_access(name) then
