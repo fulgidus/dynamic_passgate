@@ -133,4 +133,4 @@ All admin commands require `server` or `passgate_admin` privilege.
 
 ## License
 
-CC BY-SA 4.0. See [LICENSE](LICENSE) for details.
+CC BY-SA 4.0
