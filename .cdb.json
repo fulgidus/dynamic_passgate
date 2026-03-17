@@ -1,0 +1,13 @@
+{
+    "$schema": "https://content.luanti.org/api/cdb_schema/",
+    "type": "MOD",
+    "title": "Dynamic Passgate",
+    "short_description": "Invite-only server gate with dynamic per-user passwords",
+    "dev_state": "ACTIVELY_DEVELOPED",
+    "ai_disclosure": "ASSISTED",
+    "tags": ["server_tools", "multiplayer", "chat"],
+    "license": "CC-BY-SA-4.0",
+    "media_license": "CC-BY-SA-3.0",
+    "repo": "https://github.com/fulgidus/dynamic_passgate",
+    "issue_tracker": "https://github.com/fulgidus/dynamic_passgate/issues"
+}
