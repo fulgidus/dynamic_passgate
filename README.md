@@ -1,5 +1,7 @@
 # Dynamic Passgate
 
+[![Lint](https://github.com/fulgidus/dynamic_passgate/actions/workflows/lint.yml/badge.svg)](https://github.com/fulgidus/dynamic_passgate/actions/workflows/lint.yml)
+
 Invite-only server gate for [Luanti](https://www.luanti.org/) (formerly Minetest) with dynamic per-user passwords.
 
 New players get a **templated password based on their username** — share it privately to grant access. They must change it within a countdown timer to gain full privileges. Failure to comply results in a kick, and repeated failures lead to a permanent block.
@@ -41,30 +43,30 @@ The password template is fully configurable with variables, so you can use patte
 
 The password template supports the following variables:
 
-| Variable | Description | Example (player "Steve", March 17, 2026) |
-|---|---|---|
-| `${name}` | Username (lowercase) | `steve` |
-| `${NAME}` | Username (original case) | `Steve` |
-| `${server}` | Server name | `My Server` |
-| `${d}` | Day of month | `17` |
-| `${dd}` | Day of month (zero-padded) | `17` |
-| `${m}` | Month number | `3` |
-| `${mm}` | Month number (zero-padded) | `03` |
-| `${mmm}` | Month abbreviation (lowercase) | `mar` |
-| `${mmmm}` | Month full name (lowercase) | `march` |
-| `${MMM}` | Month abbreviation (capitalized) | `Mar` |
-| `${MMMM}` | Month full name (capitalized) | `March` |
-| `${yy}` | 2-digit year | `26` |
-| `${yyyy}` | 4-digit year | `2026` |
+| Variable    | Description                      | Example (player "Steve", March 17, 2026) |
+| ----------- | -------------------------------- | ---------------------------------------- |
+| `${name}`   | Username (lowercase)             | `steve`                                  |
+| `${NAME}`   | Username (original case)         | `Steve`                                  |
+| `${server}` | Server name                      | `My Server`                              |
+| `${d}`      | Day of month                     | `17`                                     |
+| `${dd}`     | Day of month (zero-padded)       | `17`                                     |
+| `${m}`      | Month number                     | `3`                                      |
+| `${mm}`     | Month number (zero-padded)       | `03`                                     |
+| `${mmm}`    | Month abbreviation (lowercase)   | `mar`                                    |
+| `${mmmm}`   | Month full name (lowercase)      | `march`                                  |
+| `${MMM}`    | Month abbreviation (capitalized) | `Mar`                                    |
+| `${MMMM}`   | Month full name (capitalized)    | `March`                                  |
+| `${yy}`     | 2-digit year                     | `26`                                     |
+| `${yyyy}`   | 4-digit year                     | `2026`                                   |
 
 ### Example Templates
 
-| Template | Password for "Steve" (March 2026) |
-|---|---|
-| `${name}-wants-in` | `steve-wants-in` |
-| `${name}-${MMM}${yyyy}` | `steve-Mar2026` |
-| `welcome-${name}-${mm}${yy}` | `welcome-steve-0326` |
-| `${server}-${name}` | `My Server-steve` |
+| Template                     | Password for "Steve" (March 2026) |
+| ---------------------------- | --------------------------------- |
+| `${name}-wants-in`           | `steve-wants-in`                  |
+| `${name}-${MMM}${yyyy}`      | `steve-Mar2026`                   |
+| `welcome-${name}-${mm}${yy}` | `welcome-steve-0326`              |
+| `${server}-${name}`          | `My Server-steve`                 |
 
 **Note:** Date-based templates mean the password changes over time. Make sure to tell invitees the correct current password.
 
@@ -72,16 +74,16 @@ The password template supports the following variables:
 
 All settings can be changed at runtime via the admin panel (`/gate`) — no server restart required.
 
-| Setting | Default | Description |
-|---|---|---|
-| `dynamic_passgate.password_template` | `${name}-wants-in` | Password template with variable substitution |
-| `dynamic_passgate.countdown_seconds` | `120` | Seconds before unverified player is kicked |
-| `dynamic_passgate.max_strikes` | `3` | Strikes before permanent block |
-| `dynamic_passgate.reminder_interval` | `10` | Seconds between chat reminders |
-| `dynamic_passgate.admin_email` | *(empty)* | Contact shown in ban/kick messages |
-| `dynamic_passgate.server_title` | *(empty)* | Override for server name in gate messages (uses `server_name` from `minetest.conf` if empty) |
-| `dynamic_passgate.verified_privs` | `interact,shout,fly,fast,noclip,give,creative,basic_privs,teleport,debug` | Privileges granted on verification |
-| `dynamic_passgate.show_inventory_button` | `true` | Show admin panel button in inventory |
+| Setting                                  | Default                                                                   | Description                                                                                  |
+| ---------------------------------------- | ------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| `dynamic_passgate.password_template`     | `${name}-wants-in`                                                        | Password template with variable substitution                                                 |
+| `dynamic_passgate.countdown_seconds`     | `120`                                                                     | Seconds before unverified player is kicked                                                   |
+| `dynamic_passgate.max_strikes`           | `3`                                                                       | Strikes before permanent block                                                               |
+| `dynamic_passgate.reminder_interval`     | `10`                                                                      | Seconds between chat reminders                                                               |
+| `dynamic_passgate.admin_email`           | *(empty)*                                                                 | Contact shown in ban/kick messages                                                           |
+| `dynamic_passgate.server_title`          | *(empty)*                                                                 | Override for server name in gate messages (uses `server_name` from `minetest.conf` if empty) |
+| `dynamic_passgate.verified_privs`        | `interact,shout,fly,fast,noclip,give,creative,basic_privs,teleport,debug` | Privileges granted on verification                                                           |
+| `dynamic_passgate.show_inventory_button` | `true`                                                                    | Show admin panel button in inventory                                                         |
 
 Settings are read in this priority order:
 1. **Admin panel** (mod_storage) — highest priority, runtime-changeable
@@ -109,14 +111,14 @@ View server status, player counts, currently pending players (with countdown tim
 
 All admin commands require `server` or `passgate_admin` privilege.
 
-| Command | Description |
-|---|---|
-| `/gate` | Open the admin panel |
-| `/gate_verify <name>` | Manually verify a player |
+| Command                       | Description                                                |
+| ----------------------------- | ---------------------------------------------------------- |
+| `/gate`                       | Open the admin panel                                       |
+| `/gate_verify <name>`         | Manually verify a player                                   |
 | `/gate_block <name> [reason]` | Block a player (ban + purge account), with optional reason |
-| `/gate_unblock <name>` | Unblock a player and reset strikes |
-| `/gate_status <name>` | Check a player's gate status |
-| `/password <old> <new>` | Change your own password (available to all players) |
+| `/gate_unblock <name>`        | Unblock a player and reset strikes                         |
+| `/gate_status <name>`         | Check a player's gate status                               |
+| `/password <old> <new>`       | Change your own password (available to all players)        |
 
 ## Technical Notes
 
