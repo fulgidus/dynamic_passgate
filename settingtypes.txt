@@ -1,0 +1,29 @@
+# Settings for Dynamic Passgate
+
+[Dynamic Passgate]
+
+# Password template with variable substitution.
+# Available variables: ${name}, ${NAME}, ${server},
+# ${d}, ${dd}, ${m}, ${mm}, ${mmm}, ${mmmm}, ${MMM}, ${MMMM}, ${yy}, ${yyyy}
+dynamic_passgate.password_template (Password template) string ${name}-wants-in
+
+# Time in seconds before an unverified player is kicked.
+dynamic_passgate.countdown_seconds (Countdown seconds) int 120 10 600
+
+# Number of failed attempts before a player is permanently blocked.
+dynamic_passgate.max_strikes (Max strikes) int 3 1 10
+
+# Seconds between chat reminders after the gate modal is dismissed.
+dynamic_passgate.reminder_interval (Reminder interval) int 10 5 60
+
+# Contact email shown in ban/kick messages. Leave empty to hide.
+dynamic_passgate.admin_email (Admin email) string
+
+# Server title shown in gate messages. If empty, uses server_name from minetest.conf.
+dynamic_passgate.server_title (Server title override) string
+
+# Comma-separated list of privileges granted to verified players.
+dynamic_passgate.verified_privs (Verified privileges) string interact,shout,fly,fast,noclip,give,creative,basic_privs,teleport,debug
+
+# Show a gate admin button in the inventory for admins.
+dynamic_passgate.show_inventory_button (Show inventory button) bool true
