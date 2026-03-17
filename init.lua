@@ -13,7 +13,7 @@
 -- Admin panel accessible via /gate command or inventory button.
 -- Requires "server" priv OR "passgate_admin" priv.
 
-local MOD_VERSION = "1.0.4"
+local MOD_VERSION = "1.0.5"
 
 -- ============================================================================
 -- Persistent storage
